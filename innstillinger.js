@@ -39,14 +39,17 @@ window.CONFIG = {
   ],
 
   // Google-skjemaet som ukesoppsummeringen sendes til.
-  // «felt» er entry-ID-ene fra den forhåndsutfylte lenken, i samme rekkefølge som spørsmål 1–20.
-  // Spørsmål 20 er «Dag for dag».
+  // «felt» er entry-ID-ene fra den forhåndsutfylte lenken, i samme rekkefølge som spørsmål 1–23.
+  // Spørsmål 20 er «Dag for dag». 21–23 er lagt til senere; tomme ID-er hoppes over.
   skjema: {
     adresse: 'https://docs.google.com/forms/d/e/1FAIpQLSdQnuPEA3dYDlAHY1N6dbr_aFtk39v2oINqQY_D419CaDpHLA/viewform?usp=pp_url',
     felt: ['entry.1478736828','entry.466273441','entry.816141117','entry.852910305','entry.609478348',
            'entry.102917501','entry.629866702','entry.627654238','entry.769904438','entry.167900143',
            'entry.662322566','entry.16160287','entry.1140923564','entry.524411368','entry.2027299760',
            'entry.289140438','entry.811013465','entry.453328689','entry.329547673',
-           'entry.203415835']   // 20: Dag for dag
+           'entry.203415835',   // 20: Dag for dag
+           '',   // 21: Hva har jeg lært eller blitt bedre på (lim inn entry-ID)
+           '',   // 22: Mål for kroppen (lim inn entry-ID)
+           '']   // 23: Kropp og energi, kommentar (lim inn entry-ID)
   }
 };
