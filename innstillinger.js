@@ -39,7 +39,8 @@ window.CONFIG = {
   ],
 
   // Google-skjemaet som ukesoppsummeringen sendes til.
-  // «felt» er entry-ID-ene fra den forhåndsutfylte lenken, i samme rekkefølge som spørsmål 1–19.
+  // «felt» er entry-ID-ene fra den forhåndsutfylte lenken, i samme rekkefølge som spørsmål 1–20.
+  // Spørsmål 20 er «Dag for dag». Legg til ID-en for det som siste element i listen når spørsmålet er laget.
   skjema: {
     adresse: 'https://docs.google.com/forms/d/e/1FAIpQLSdQnuPEA3dYDlAHY1N6dbr_aFtk39v2oINqQY_D419CaDpHLA/viewform?usp=pp_url',
     felt: ['entry.1478736828','entry.466273441','entry.816141117','entry.852910305','entry.609478348',
