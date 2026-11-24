@@ -30,9 +30,12 @@ window.CONFIG = {
     }
   ],
 
-  // Kamper og cuper legges inn enkeltvis. En kamp erstatter vanlig trening den dagen.
+  // Kamper og cuper legges inn enkeltvis, én linje per kamp. En kamp erstatter vanlig trening den dagen.
+  // Har lagene hver sin kamp samme dag, legges begge inn. Guttene velger sin egen kamp i appen.
   // Eksempel: { dato: '2026-12-05', tid: '12:00', min: 50, navn: 'Kamp mot Bærum SK' },
   kamper: [
+    { dato: '2026-11-28', tid: '11:00', min: 50, navn: 'Stabæk 2 mot Kjelsås 2' },
+    { dato: '2026-11-28', tid: '13:00', min: 50, navn: 'Stabæk 1 mot Kjelsås 1' },
   ],
 
   // Google-skjemaet som ukesoppsummeringen sendes til.
