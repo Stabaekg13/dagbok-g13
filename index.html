@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Spillerdagbok G13</title>
+<meta name="theme-color" content="#0b2559">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Dagbok G13">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light dark;--bg:light-dark(#f3f6fb,#0a1428);--ink:light-dark(#0d1b33,#e8eefb);--muted:light-dark(#56657f,#9aa9c4);--navy:#0b2559;--blue:light-dark(#1f6fd1,#4b93ec);--sky:light-dark(#e4eefb,#14284c);--card:light-dark(#ffffff,#0f1a33);--line:light-dark(#d9e2ef,#24365c);--warn:light-dark(#9a5b00,#f2b95a);--warnbg:light-dark(#fff4e0,#33260f);--outer:light-dark(#e3e9f3,#050a16)}
+*{box-sizing:border-box;min-width:0}
+html,body{margin:0}
+body{background:var(--outer);color:var(--ink);font:16px/1.5 Inter,system-ui,sans-serif;overflow-x:clip;-webkit-tap-highlight-color:transparent}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,textarea:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+h1,h2,h3,.num{font-family:"Barlow Semi Condensed",Inter,sans-serif;letter-spacing:-.01em}
+.app{max-width:480px;margin:0 auto;min-height:100svh;background:var(--bg);display:flex;flex-direction:column;position:relative}
+@media(min-width:520px){.app{border-left:1px solid var(--line);border-right:1px solid var(--line)}}
+.top{background:var(--navy);color:#fff;padding:calc(14px + env(safe-area-inset-top)) 20px 18px}
+.top h2{margin:0;font-size:28px;line-height:1.1}
+.top .sub{opacity:.8;font-size:14px}
+.top .row{display:flex;align-items:center;gap:10px}
+.top .row>div{flex:1}
+.back,.gear{background:rgba(255,255,255,.12);border:0;border-radius:10px;width:42px;height:42px;color:#fff;font-size:22px;line-height:1;display:grid;place-items:center;flex:none}
+.gear svg{width:22px;height:22px;fill:none;stroke:#fff;stroke-width:2}
+.dots{display:flex;gap:6px;margin-top:12px}
+.dots i{flex:1;height:4px;border-radius:2px;background:rgba(255,255,255,.25)}
+.dots i.on{background:#fff}
+.body{flex:1;padding:16px 16px 24px;display:flex;flex-direction:column;gap:14px}
+.body>*{flex-shrink:0}
+.nav{position:sticky;bottom:0;display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);background:var(--card);padding:6px 6px calc(8px + env(safe-area-inset-bottom))}
+.nav button{background:none;border:0;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:12px;color:var(--muted);padding:6px 0;min-height:48px}
+.nav button.on{color:var(--blue);font-weight:600}
+.ic{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px}
+.card h3{margin:0 0 8px;font-size:19px}
+.q{font-family:"Barlow Semi Condensed",Inter,sans-serif;font-size:24px;font-weight:700;line-height:1.15;margin:4px 0 2px}
+.lbl{font-size:14px;font-weight:600;margin:10px 0 6px}
+.small{font-size:13px;color:var(--muted)}
+.cta{display:block;width:100%;border:0;border-radius:16px;background:var(--blue);color:#fff;padding:18px 16px;text-align:left;font-weight:600;font-size:18px;min-height:64px}
+.cta small{display:block;font-weight:400;font-size:14px;opacity:.9}
+.btn2{display:block;width:100%;border:1.5px solid var(--line);border-radius:14px;background:var(--card);padding:14px 16px;text-align:left;font-weight:600;min-height:52px}
+.go{display:block;width:100%;border:0;border-radius:14px;background:var(--navy);color:#fff;font-weight:600;padding:15px;min-height:52px;margin-top:4px;text-align:center;text-decoration:none;font-size:16px}
+@media(prefers-color-scheme:dark){.go{background:var(--blue)}}
+.ghost{width:100%;border:0;background:none;color:var(--muted);padding:12px;min-height:44px}
+.week{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center}
+.wd{background:none;border:0;padding:4px 0;font-size:12px;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:4px;min-height:58px}
+.wd .c{width:34px;height:34px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;font-size:13px;font-weight:600;color:var(--ink)}
+.wd.full .c{background:var(--navy);border-color:var(--navy);color:#fff}
+@media(prefers-color-scheme:dark){.wd.full .c{background:var(--blue);border-color:var(--blue)}}
+.wd.part .c{border-color:var(--blue);border-style:dashed}
+.wd.today .c{box-shadow:0 0 0 3px var(--sky)}
+.wd.fut{opacity:.4}
+.wd .t{width:6px;height:6px;border-radius:50%}
+.wd .t.on{background:var(--blue)}
+.scale{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.sc{border:1.5px solid var(--line);background:var(--card);border-radius:12px;min-height:48px;font-weight:600;font-size:17px}
+.sc.on{background:var(--blue);border-color:var(--blue);color:#fff}
+.ends{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:4px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1.5px solid var(--line);background:var(--card);border-radius:999px;padding:9px 14px;font-size:15px;min-height:44px}
+.chip.on{background:var(--sky);border-color:var(--blue);color:var(--ink);font-weight:600}
+.chip.na{opacity:.5;border-style:dashed}
+.step{display:flex;align-items:center;justify-content:center;gap:18px;margin:8px 0}
+.step button{width:52px;height:52px;border-radius:50%;border:1.5px solid var(--line);background:var(--card);font-size:24px}
+.step .num{font-size:40px;font-weight:700;min-width:140px;text-align:center}
+.yn{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.yn button{min-height:60px;border-radius:14px;border:1.5px solid var(--line);background:var(--card);font-weight:600;font-size:18px}
+.yn button.on{background:var(--blue);border-color:var(--blue);color:#fff}
+.info{background:var(--warnbg);color:var(--warn);border-radius:12px;padding:12px 14px;font-size:14px}
+.info b{font-weight:600}
+textarea,input[type=text]{width:100%;font:16px/1.4 Inter,sans-serif;border:1.5px solid var(--line);border-radius:12px;padding:12px;background:var(--card);color:var(--ink);resize:vertical}
+textarea{min-height:64px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tile{border:1.5px solid var(--line);background:var(--card);border-radius:14px;padding:12px;text-align:left;font-weight:600;min-height:64px;font-size:15px;display:flex;flex-direction:column;justify-content:space-between;gap:4px}
+.tile small{font-weight:400;color:var(--muted);font-size:12px}
+.stat{display:flex;flex-direction:column}
+.stat .num{font-size:28px;font-weight:700;line-height:1.1}
+.stat span{font-size:13px;color:var(--muted)}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pair .card{padding:12px}
+.pair h3{font-size:17px}
+.split{display:flex;height:10px;border-radius:5px;overflow:hidden;background:var(--sky);margin:8px 0 4px}
+.split i{display:block;height:100%}
+.days7{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;align-items:end;height:110px;margin-top:6px}
+.days7 div{display:flex;flex-direction:column;align-items:center;justify-content:end;height:100%;font-size:11px;color:var(--muted);gap:3px}
+.days7 b{display:block;width:70%;background:var(--blue);border-radius:4px 4px 0 0;min-height:2px}
+.days7 em{font-style:normal;font-weight:600;color:var(--ink);font-size:12px}
+.chk{display:grid;grid-template-columns:1fr auto;gap:6px 10px;align-items:center;padding:10px 0;border-top:1px solid var(--line)}
+.chk:first-of-type{border-top:0}
+.chk .h{font-size:12px;color:var(--muted);grid-column:1/-1;margin-top:-4px}
+.seg{display:flex;gap:4px;flex-wrap:wrap}
+.seg button{border:1.5px solid var(--line);background:var(--card);border-radius:10px;padding:6px 10px;font-size:14px;min-height:42px}
+.seg button.on{background:var(--blue);border-color:var(--blue);color:#fff}
+.tabs{display:flex;flex-wrap:wrap;gap:6px}
+.tabs button{border:1.5px solid var(--line);background:var(--card);border-radius:999px;padding:7px 12px;font-size:14px;min-height:40px}
+.tabs button.on{background:var(--navy);border-color:var(--navy);color:#fff}
+.sugg{display:grid;gap:6px}
+.sugg button{text-align:left;border:1.5px solid var(--line);background:var(--card);border-radius:12px;padding:10px 12px;font-size:15px;min-height:44px}
+.sugg button.on{border-color:var(--blue);background:var(--sky);font-weight:600}
+.tema,.from{background:var(--sky);border-radius:12px;padding:10px 12px;font-size:14px}
+.prev{font-weight:600;font-size:17px}
+.big{display:grid;place-items:center;text-align:center;gap:8px;padding:28px 8px}
+.big .ok{width:84px;height:84px;border-radius:50%;background:var(--blue);display:grid;place-items:center;color:#fff}
+.big .ok svg{width:44px;height:44px;stroke-width:3}
+.hrow{display:grid;grid-template-columns:52px minmax(0,1fr) minmax(0,1fr);gap:8px;align-items:center;font-size:13px;padding:6px 0}
+.bar{height:14px;border-radius:4px;background:var(--sky);overflow:hidden;display:flex}
+.bar i{display:block;height:100%}
+.leg{display:flex;gap:12px;font-size:12px;color:var(--muted);flex-wrap:wrap}
+.leg i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:4px;vertical-align:-1px}
+.dl{display:grid}
+.dl button{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 8px;text-align:left;background:none;border:0;border-top:1px solid var(--line);padding:10px 0;min-height:52px}
+.dl button span{font-size:13px;color:var(--muted)}
+.err{color:light-dark(#b42318,#ff8a80);font-size:14px}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(96px + env(safe-area-inset-bottom));width:min(448px,calc(100vw - 32px));background:var(--navy);color:#fff;border-radius:12px;padding:12px 14px;font-weight:600;text-align:center;z-index:5}
+.todo{display:grid}
+.todo button{display:grid;grid-template-columns:34px minmax(0,1fr) auto;align-items:center;gap:12px;background:none;border:0;border-top:1px solid var(--line);padding:12px 0;text-align:left;min-height:62px}
+.todo button:first-child{border-top:0}
+.todo .o{width:30px;height:30px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;color:#fff}
+.todo .o.done{background:var(--blue);border-color:var(--blue)}
+.todo .o svg{width:18px;height:18px;stroke-width:3}
+.todo b{font-weight:600;font-size:17px;display:block}
+.todo .s{font-size:13px;color:var(--muted)}
+.todo .arr{color:var(--muted);font-size:24px}
+.todo button.hot b{color:var(--blue)}
+.sec{font-size:14px;font-weight:600;color:var(--muted);margin:4px 2px -6px}
+.mini{display:flex;justify-content:space-between;gap:8px;font-size:14px;margin-top:10px;color:var(--muted)}
+.mini b{color:var(--ink);font-weight:600}
+.refl{display:grid;gap:8px;font-size:15px}
+.refl b{font-weight:600}
+.hide{display:none}
+@media(prefers-reduced-motion:no-preference){.big .ok{animation:pop .35s ease-out}@keyframes pop{from{transform:scale(.6);opacity:0}to{transform:scale(1);opacity:1}}}
+</style>
+</head>
+<body>
+<div class="app" id="app"><noscript><p style="padding:20px">Appen trenger JavaScript.</p></noscript></div>
+<input type="file" id="importfile" accept="application/json,.json" class="hide">
+<script src="innstillinger.js"></script>
+<script>
+{
+const C=window.CONFIG||{};
+const IC={home:'<path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H10v6H4a1 1 0 0 1-1-1z"/>',plus:'<circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/>',cal:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>',chart:'<path d="M4 20V11M10 20V5M16 20v-6M2 20h20"/>',check:'<path d="M5 12l5 5 9-10"/>',user:'<circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4.5-6 8-6s7 2 8 6"/>'};
+const ic=k=>`<svg class="ic" viewBox="0 0 24 24" aria-hidden="true">${IC[k]}</svg>`;
+const pad=n=>String(n).padStart(2,'0');
+const iso=d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+const parse=s=>{const[a,b,c]=s.split('-').map(Number);return new Date(a,b-1,c)};
+const add=(d,n)=>{const x=new Date(d);x.setDate(x.getDate()+n);return x};
+const mon=d=>add(d,-((d.getDay()+6)%7));
+const wk=d=>{const t=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));const k=t.getUTCDay()||7;t.setUTCDate(t.getUTCDate()+4-k);const y=t.getUTCFullYear();return{y,w:Math.ceil(((t-Date.UTC(y,0,1))/864e5+1)/7)}};
+const wkey=d=>{const k=wk(d);return k.y+'-W'+pad(k.w)};
+const DN=['søndag','mandag','tirsdag','onsdag','torsdag','fredag','lørdag'];
+const DS=['Sø','Ma','Ti','On','To','Fr','Lø'];
+const MN=['januar','februar','mars','april','mai','juni','juli','august','september','oktober','november','desember'];
+const cap=s=>s[0].toUpperCase()+s.slice(1);
+const nf=(x,d=0)=>x.toLocaleString('nb-NO',{minimumFractionDigits:d,maximumFractionDigits:d});
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const T0=new Date();const TODAY=new Date(T0.getFullYear(),T0.getMonth(),T0.getDate());const TK=iso(TODAY);
+const W0=mon(TODAY);const WEEKEND=TODAY.getDay()===0||TODAY.getDay()===6;const SW=WEEKEND?W0:add(W0,-7);const SWK=wkey(SW);
+function planFor(k){const m=(C.kamper||[]).find(x=>x.dato===k);if(m)return{type:'Kamp',time:m.tid||'',min:m.min||60,name:m.navn||'Kamp'};const d=parse(k).getDay();const p=(C.treningsplan||[]).find(x=>k>=x.fra&&k<=x.til);const t=p&&p.dager&&p.dager[d];return t?{type:'Lagtrening',time:t.tid,min:t.min,name:'Lagtrening'}:null}
+const TYPES=[['Lagtrening','Med laget'],['Kamp','Serie eller cup'],['Løkkefotball','Med venner'],['Styrketrening','Program eller gym'],['Egentrening fotball','Alene med ball'],['Løping/kondisjon','Løp og intervaller'],['Skolegym','Kroppsøving'],['Annen idrett','Håndball, ski …'],['Annen aktivitet','Sykling, bading …']];
+const ORG=['Lagtrening','Kamp'];
+const DUR=[30,45,60,90,120,180,240];
+const fmtMin=m=>m<60?m+' min':Math.floor(m/60)+' t'+(m%60?' '+(m%60)+' min':'');
+const RPE=['','Veldig lett','Lett','Lett','Litt anstrengende','Moderat','Ganske hardt','Hardt','Veldig hardt','Nesten maks','Maksimalt'];
+const FEEL=['Tung','Grei','OK','Bra','Kjempebra'];
+const REFL={fotball:{good:['Pasningene','Førstetouch','Pressen','Duellene','Avslutningene','Innsatsen','Samarbeidet','Hadde det gøy'],hard:['Tempoet','Duellene','Kondisjonen','Konsentrasjonen','En øvelse','Ingenting spesielt']},styrke:{good:['Teknikken på øvelsene','Fullførte hele programmet','Klarte flere repetisjoner','Økte vekten','Kjerne og mage','Innsatsen'],hard:['En bestemt øvelse','Holde god teknikk','De siste settene','Motivasjonen','Ingenting spesielt']},kondis:{good:['Holdt jevnt tempo','Klarte intervallene','Løp lenger enn sist','Pusten føltes bra','Innsatsen','Hadde det gøy'],hard:['Tempoet','Den siste delen','Pusten','Motivasjonen','Ingenting spesielt']},annet:{good:['Innsatsen','Samarbeidet','Lærte noe nytt','Fikk bevege meg','Hadde det gøy'],hard:['Tempoet','Kondisjonen','Noe nytt jeg ikke kunne','Ingenting spesielt']}};
+const reflFor=t=>REFL[['Lagtrening','Kamp','Løkkefotball','Egentrening fotball'].includes(t)?'fotball':t==='Styrketrening'?'styrke':t==='Løping/kondisjon'?'kondis':'annet'];
+const NEED=['Nei','Mer mat','Mer drikke','Mer hvile'];
+const HAB=[['frokost','Spiste frokost'],['jevnt','Spiste jevnt gjennom dagen'],['etter','Spiste etter trening'],['variert','Variert mat, frukt og grønt'],['vann','Drakk vann jevnlig'],['hvile','Tok meg tid til ro og hvile']];
+const AREAS={'F1':['Gå helhjertet inn i 50/50-dueller','Holde kompakte avstander når vi forsvarer','Være med i presset med en gang vi mister ballen','Hjelpe til med å stenge pasningsskygger sentralt','Sideforskyve raskt sammen med laget','Ta returløp når vi mister ballen'],'A1':['Se fremover før jeg får ballen','Velge riktig etter gjenvinning: angripe, sikre eller bearbeide','Være tålmodig og holde ballen i laget','Gi pasningsvalg og være med og danne trekanter','Vende spillet raskt fra side til side'],'A3':['Fylle boksen når vi angriper','Fullføre løpene mine inn i boksen','Treffe ramma oftere når jeg avslutter','Angripe bakrom med tempo fra kanten','Ta flere skudd langs bakken'],'Teknikk':['Bruke svak fot mer på trening','Øve på førstetouch med begge bein','Prøve en ny finte i løkka','Slå presise pasninger med innsiden','Ta imot ballen med kroppen vendt fremover'],'Innsats':['Tørre å være god: ta initiativ','Være vokal og snakke på banen','Følge kampplanen, også når det går tungt','Gi en lagkamerat ros på hver trening','Svare positivt etter en feil'],'Søvn og hvile':['Legge bort mobilen en halvtime før jeg sover','Være i seng før kl. 22 på skoledager','Legge meg omtrent samme tid hver kveld','Ha minst én rolig dag uten hard trening','Ikke spille løkke rett før en kamp'],'Mat og drikke':['Spise frokost før skolen hver dag','Ha med vannflaske på skolen','Spise noe kort tid etter trening','Ha med en matbit til etter trening','Spise frukt eller grønnsaker hver dag']};
+const ALAB={'F1':'F1 Forsvare','A1':'A1 Kontroll','A3':'A3 Boksen','Teknikk':'Teknikk','Innsats':'Innsats','Søvn og hvile':'Søvn og hvile','Mat og drikke':'Mat og drikke'};
+const BRA=['Innsatsen min','Tørte å være god','Gikk helhjertet inn i dueller','Var med i presset','Fylte boksen','Tok returløp','Fulgte kampplanen','Sov og hvilte godt','Klarte målet mitt'];
+const VANSK=['50/50-dueller','Omsette sjanser','Sideforskyve med laget','Holde avstandene','Å takle feil','Å få nok søvn','Skole og trening','Var mye sliten'];
+const CHECK=[['sovn','Nok søvn de fleste nettene'],['mat','Spist regelmessig'],['vann','Drukket vann jevnlig'],['plan','Fulgt planen for trening og hvile'],['sagt','Sagt fra hvis jeg hadde vondt eller var syk']];
+const KEY='g13dagbok';
+const blank=()=>({v:1,name:'',days:{},sessions:[],sent:{},draft:{},progs:[],goals:[],hideInstall:false});
+let S;try{S=JSON.parse(localStorage.getItem(KEY)||'null')}catch(e){S=null}
+if(!S||!S.days)S=blank();
+let saveOk=true;
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S));saveOk=true}catch(e){saveOk=false}};
+try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist()}catch(e){}
+const ui={view:S.name?'home':'start',sd:TK,step:1,ws:1,tr:null,toast:'',preview:false,err:'',imp:null};
+const dayO=k=>S.days[k]||(S.days[k]={});
+const ses=k=>S.sessions.filter(x=>x.date===k);
+const state=k=>{const e=S.days[k];if(!e)return'none';const core=['sleep','quality','energy','mood','soreness','issue'].every(f=>e[f]!=null);return core&&e.habits?'full':(Object.keys(e).length?'part':'none')};
+const dlabel=k=>{if(k===TK)return'I dag';if(k===iso(add(TODAY,-1)))return'I går';const d=parse(k);return cap(DN[d.getDay()])+' '+d.getDate()+'. '+MN[d.getMonth()].slice(0,3)};
+function stats(m){const ks=[];for(let i=0;i<7;i++){const d=add(m,i);if(d<=TODAY)ks.push(iso(d))}
+  const ss=S.sessions.filter(x=>ks.includes(x.date));const avg=f=>{const v=ks.map(k=>S.days[k]?.[f]).filter(x=>x!=null);return v.length?v.reduce((a,b)=>a+b,0)/v.length:null};
+  const org=ss.filter(x=>ORG.includes(x.type)).reduce((a,x)=>a+x.min,0),egen=ss.filter(x=>!ORG.includes(x.type)).reduce((a,x)=>a+x.min,0);
+  return{ks,ss,reg:ks.filter(k=>S.days[k]?.sleep!=null).length,n:ss.length,org,egen,min:org+egen,load:ss.reduce((a,x)=>a+x.min*x.rpe,0),sleep:avg('sleep'),energy:avg('energy'),mood:avg('mood'),hr:avg('hr'),rest:ks.filter(k=>!ses(k).length).length}}
+const go=v=>{ui.view=v;ui.err='';render()};
+function head(title,sub,back,dots,of=4,gear){return`<div class="top"><div class="row">${back?`<button class="back" data-act="${back}" aria-label="Tilbake">‹</button>`:''}<div><h2>${title}</h2>${sub?`<div class="sub">${sub}</div>`:''}</div>${gear?`<button class="gear" data-act="profil" aria-label="Meg og innstillinger">${ic('user')}</button>`:''}</div>${dots?`<div class="dots">${Array.from({length:of},(_,i)=>`<i class="${i<dots?'on':''}"></i>`).join('')}</div>`:''}</div>`}
+const circle=d=>`<span class="o ${d?'done':''}">${d?ic('check'):''}</span>`;
+function todo(done,title,sub,attrs,hot){return`<button class="${hot&&!done?'hot':''}" ${attrs}>${circle(done)}<span><b>${title}</b><span class="s">${sub}</span></span><span class="arr">›</span></button>`}
+function weekStrip(){return`<div class="week">${[0,1,2,3,4,5,6].map(i=>{const d=add(W0,i),k=iso(d),fut=d>TODAY,st=fut?'none':state(k);return`<button class="wd ${st} ${k===TK?'today':''} ${fut?'fut':''}" ${fut?'disabled':`data-act="openday" data-v="${k}"`} aria-label="${DN[d.getDay()]}"><span>${DS[d.getDay()]}</span><span class="c">${st==='full'?ic('check').replace('class="ic"','class="ic" style="width:18px;height:18px;stroke-width:3"'):d.getDate()}</span><span class="t ${ses(k).length?'on':''}"></span></button>`}).join('')}</div>`}
+const standalone=()=>{try{return matchMedia('(display-mode: standalone)').matches||navigator.standalone===true}catch(e){return false}};
+function vStart(){return head('Spillerdagbok',C.lag||'')+`<div class="body"><div class="q">Hei! Hva heter du?</div><div class="small">Navnet sendes med ukesoppsummeringen, så treneren vet hvem den er fra. Skriv fornavn og første bokstav i etternavnet.</div><input type="text" id="namein" maxlength="40" placeholder="For eksempel Emil H." autocomplete="given-name" value="${esc(S.name)}">${ui.err?`<div class="err">${ui.err}</div>`:''}<button class="go" data-act="setname">Start</button><div class="card"><h3>Slik fungerer det</h3><div class="small"><b>Hver dag:</b> en kort status om søvn, form og vaner, og trening når du har trent.<br><b>Hver søndag:</b> en ukesoppsummering som sendes til treneren.<br>Alt du registrerer, lagres bare på denne telefonen. Treneren får bare ukesoppsummeringen du selv sender.</div></div></div>`}
+function vHome(){const st=state(TK),p=planFor(TK),todaySes=ses(TK),pDone=p&&todaySes.some(x=>x.type===p.type),s=stats(W0),goal=S.goals[S.goals.length-1],sent=!!S.sent[SWK];
+  const stSub=st==='full'?'Ferdig':st==='part'?'Én ting igjen':'Ca. 1 minutt';
+  const trRow=p?todo(pDone,`${p.name}${p.time?' kl. '+p.time:''}`,pDone?'Registrert':'Registrer etter økta',`data-act="plan"`,false):todo(todaySes.length>0,'Trening eller løkke',todaySes.length?todaySes.map(x=>x.type).join(', '):'Hvis du har trent i dag',`data-act="trening"`,false);
+  const wSub=sent?'Sendt til treneren':WEEKEND?'Klar nå · 2–4 minutter':`Uke ${wk(SW).w} er ikke sendt ennå`;
+  const inst=!standalone()&&!S.hideInstall?`<div class="card"><h3>Legg appen på hjem-skjermen</h3><div class="small"><b>iPhone (Safari):</b> trykk Del-knappen og «Legg til på Hjem-skjerm».<br><b>Android (Chrome):</b> trykk ⋮ og «Legg til på startskjermen».<br>Da lagres dagboken trygt, og den er lett å finne.</div><button class="ghost" style="text-align:left;padding:8px 0 0" data-act="hideinst">Ok, skjønner</button></div>`:'';
+  return head(`Hei, ${esc(S.name.split(' ')[0])}!`,`${cap(DN[TODAY.getDay()])} ${TODAY.getDate()}. ${MN[TODAY.getMonth()]} · uke ${wk(TODAY).w}`,false,0,4,true)+`<div class="body">${saveOk?'':'<div class="info"><b>Kunne ikke lagre.</b> Nettleseren tillater ikke lagring. Prøv å åpne appen i Safari eller Chrome, ikke i privat modus.</div>'}
+  <div class="sec">Hver dag</div>
+  <div class="card todo">${todo(st==='full','Dagens status',stSub,`data-act="openday" data-v="${TK}" data-step="${st==='part'&&S.days[TK].issue?4:1}"`,true)}${trRow}</div>
+  ${p?`<button class="ghost" style="text-align:left;padding:0 4px" data-act="trening">+ Annen trening eller løkke</button>`:''}
+  <div class="sec">Hver søndag</div>
+  <div class="card todo">${todo(sent,'Ukesoppsummering',wSub,`data-act="uka"`,WEEKEND||!sent)}</div>
+  ${goal?`<div class="card"><div class="small">Målet ditt denne uka</div><div class="prev">${esc(goal.text)}</div></div>`:''}
+  <div class="card">${weekStrip()}<div class="mini"><span>Trening <b>${fmtMin(s.min)}</b></span><span>Søvn <b>${s.sleep!=null?nf(s.sleep,1)+' t':'–'}</b></span></div></div>
+  ${inst}</div>`}
+function scale(f,v,lo,hi){return`<div class="scale">${[1,2,3,4,5].map(i=>`<button class="sc ${v===i?'on':''}" data-act="set" data-f="${f}" data-v="${i}">${i}</button>`).join('')}</div><div class="ends"><span>${lo}</span><span>${hi}</span></div>`}
+function vStatus(){const k=ui.sd,e=dayO(k),s=ui.step;
+  if(s===1&&e.sleep==null){const prev=Object.keys(S.days).filter(x=>x<k&&S.days[x].sleep!=null).sort().pop();e.sleep=prev?S.days[prev].sleep:9;save()}
+  let b='';
+  if(s===1)b=`<div class="q">Hvordan sov du i natt?</div><div class="step"><button data-act="sleep" data-v="-0.5" aria-label="Mindre">–</button><span class="num">${nf(e.sleep,1)} t</span><button data-act="sleep" data-v="0.5" aria-label="Mer">+</button></div><div class="lbl">Hvor godt sov du?</div>${scale('quality',e.quality,'Dårlig','Veldig godt')}<div class="lbl">Hvilepuls i morges</div>${e.hr!=null?`<div class="step"><button data-act="hr" data-v="-1" aria-label="Lavere">–</button><span class="num" style="font-size:32px;min-width:160px">${e.hr} <span style="font-size:16px">slag/min</span></span><button data-act="hr" data-v="1" aria-label="Høyere">+</button></div><button class="ghost" style="padding:4px" data-act="hrnone">Målte ikke i dag</button>`:`<div class="chips"><button class="chip" data-act="hrstart">Legg inn hvilepuls</button><button class="chip ${e.hrSkip?'on':''}" data-act="hrnone">Målte ikke</button></div>`}<div class="small">Mål liggende i senga før du står opp: tell pulsen i ett minutt, eller bruk klokka.</div>`;
+  if(s===2)b=`<div class="q">Hvordan føler du deg?</div><div class="lbl">Energi</div>${scale('energy',e.energy,'Lav','Høy')}<div class="lbl">Humør</div>${scale('mood',e.mood,'Dårlig','Veldig godt')}<div class="lbl">Støl</div>${scale('soreness',e.soreness,'Ikke støl','Veldig støl')}`;
+  if(s===3)b=`<div class="q">Noe vondt, syk eller veldig sliten?</div><div class="yn" style="margin-top:8px"><button class="${e.issue==='nei'?'on':''}" data-act="issue" data-v="nei">Nei</button><button class="${e.issue==='ja'?'on':''}" data-act="issue" data-v="ja">Ja</button></div>${e.issue==='ja'?`<div class="chips" style="margin-top:10px">${['Vondt et sted','Syk','Veldig sliten'].map(t=>`<button class="chip ${e.itype===t?'on':''}" data-act="itype" data-v="${t}">${t}</button>`).join('')}</div><textarea data-field="note" maxlength="200" placeholder="Kort notat (valgfritt)">${esc(e.note)}</textarea><div class="info"><b>Si fra</b> til en forelder og treneren.</div>`:''}`;
+  if(s===4){const na=!ses(k).length&&!planFor(k);e.habits=e.habits||{};save();b=`<div class="q">Hva stemmer i dag?</div><div class="chips" style="margin-top:10px">${HAB.map(([hk,t])=>hk==='etter'&&na?`<span class="chip na">${t}: ikke aktuelt</span>`:`<button class="chip ${e.habits[hk]?'on':''}" data-act="hab" data-v="${hk}">${t}</button>`).join('')}</div>`}
+  if(s===5){const rest=!ses(k).length;return head('Dagens status',dlabel(k),'home')+`<div class="body"><div class="big"><div class="ok">${ic('check')}</div><div class="q">Ferdig for ${k===TK?'i dag':dlabel(k).toLowerCase()}!</div><div class="small">${rest?'Hvile er også trening.':'Bra jobba.'}</div></div><div class="lbl">Trente du noe ${k===TK?'i dag':'den dagen'}?</div><div class="chips">${['Lagtrening','Løkkefotball','Styrketrening','Annet'].map(t=>`<button class="chip" data-act="quicktr" data-v="${t}">${t}</button>`).join('')}</div><button class="go" data-act="home">Ferdig</button></div>`}
+  const can=s===1?e.quality:s===2?(e.energy&&e.mood&&e.soreness):s===3?e.issue:true;
+  return head('Dagens status',dlabel(k),'home',s)+`<div class="body">${b}${ui.err?`<div class="err">${ui.err}</div>`:''}<button class="go" data-act="next" data-ok="${can?1:0}">${s===4?'Ferdig':'Neste'}</button>${s===4?`<button class="ghost" data-act="next" data-ok="1">Tar det i kveld</button>`:''}${s>1?`<button class="ghost" data-act="prev">Tilbake</button>`:''}</div>`}
+function chipset(list,sel,f){return`<div class="chips">${list.map(t=>`<button class="chip ${sel.includes(t)?'on':''}" data-act="trtog" data-f="${f}" data-v="${t}">${t}</button>`).join('')}</div>`}
+function vTrening(){const t=ui.tr;
+  if(t.step===1){const p=planFor(t.date);return head('Registrer trening',dlabel(t.date),'home')+`<div class="body"><div class="seg">${[TK,iso(add(TODAY,-1)),iso(add(TODAY,-2))].map(k=>`<button class="${t.date===k?'on':''}" data-act="trdate" data-v="${k}">${dlabel(k)}</button>`).join('')}</div>
+  ${p?`<button class="cta" data-act="pick" data-v="${p.type}" data-min="${p.min}">${esc(p.name)}${p.time?' kl. '+p.time:''}<small>${fmtMin(p.min)}</small></button>`:''}
+  ${S.progs.map((g,i)=>`<button class="btn2" data-act="prog" data-v="${i}">${esc(g.name)} · ${fmtMin(g.min)}</button>`).join('')}
+  <div class="grid2">${TYPES.map(([n,d])=>`<button class="tile" data-act="pick" data-v="${n}">${n}<small>${d}</small></button>`).join('')}</div></div>`}
+  if(t.step===2)return head(t.type,dlabel(t.date)+' · steg 1 av 2','trback',1,2)+`<div class="body"><div class="q">Hvor lenge?</div><div class="chips">${DUR.map(m=>`<button class="chip ${t.min===m?'on':''}" data-act="trmin" data-v="${m}">${m===240?'4 t +':fmtMin(m)}</button>`).join('')}</div>${t.min?`<div class="step"><button data-act="trstep" data-v="-15" aria-label="15 minutter mindre">–</button><span class="num" style="font-size:32px;min-width:160px">${fmtMin(t.min)}</span><button data-act="trstep" data-v="15" aria-label="15 minutter mer">+</button></div>`:''}
+  <div class="q" style="margin-top:8px">Hvor hardt?</div><div class="scale">${[1,2,3,4,5,6,7,8,9,10].map(i=>`<button class="sc ${t.rpe===i?'on':''}" data-act="trrpe" data-v="${i}">${i}</button>`).join('')}</div><div class="ends"><span>Veldig lett</span><span>${t.rpe?`<b style="color:var(--blue)">${RPE[t.rpe]}</b>`:''}</span><span>Maks</span></div>
+  <div class="q" style="margin-top:8px">Hvordan føltes økta?</div><div class="chips">${FEEL.map((f,i)=>`<button class="chip ${t.feel===i?'on':''}" data-act="trfeel" data-v="${i}">${f}</button>`).join('')}</div>
+  ${ui.err?`<div class="err">${ui.err}</div>`:''}<button class="go" data-act="trnext">Neste</button></div>`;
+  return head('Etter økta',dlabel(t.date)+' · steg 2 av 2','trprev',2,2)+`<div class="body"><div class="q">Hva fungerte bra?</div>${chipset(reflFor(t.type).good,t.good,'good')}<div class="q" style="margin-top:6px">Hva var mest krevende?</div>${chipset(reflFor(t.type).hard,t.hard,'hard')}<div class="q" style="margin-top:6px">Trengte du ekstra mat, drikke eller hvile?</div>${chipset(NEED,t.need,'need')}<textarea data-tr="refl" maxlength="200" placeholder="Vil du skrive noe mer? (valgfritt)">${esc(t.refl)}</textarea>
+  ${!ORG.includes(t.type)&&!t.fromProg?`<label class="chip" style="display:flex;gap:8px;align-items:center"><input type="checkbox" ${t.save?'checked':''} data-act="trsave"> Lagre som fast økt</label>`:''}
+  <button class="go" data-act="trsavego">Lagre økt</button></div>`}
+function composeGoal(D){if(!D.goal)return'';return D.goal+(D.naar?' – '+D.naar.toLowerCase():'')+(D.ofte?', '+D.ofte.toLowerCase():'')}
+const draft=()=>S.draft[SWK]||(S.draft[SWK]={check:{},bra:[],vansk:[],area:'F1',goal:'',naar:'',ofte:'',talk:'Nei',braT:'',vanskT:'',kropp:'',talkT:''});
+function top(list){const c={};list.forEach(x=>c[x]=(c[x]||0)+1);return Object.entries(c).sort((a,b)=>b[1]-a[1]).slice(0,3).map(([k,n])=>n>1?`${k} (${n})`:k).join(', ')}
+const cut=(x,n)=>{x=String(x??'');return x.length>n?x.slice(0,n-1)+'…':x};
+function formVals(s,D){const ck={sovn:'Søvn',mat:'Mat',vann:'Vann',plan:'Plan',sagt:'Sagt fra'};return[S.name,SWK,s.reg,s.n,s.org,s.egen,s.load,s.sleep!=null?nf(s.sleep,1):'',s.energy!=null?nf(s.energy,1):'',s.mood!=null?nf(s.mood,1):'',s.hr!=null?Math.round(s.hr):'',D.goalRes||'',D.kropp||'',Object.keys(ck).filter(c=>D.check[c]).map(c=>ck[c]+': '+D.check[c]).join(' · '),cut([...D.bra,D.braT].filter(Boolean).join(', '),300),cut([...D.vansk,D.vanskT].filter(Boolean).join(', '),300),cut(composeGoal(D),200),D.talk,D.talk==='Ja'?cut(D.talkT,400):'']}
+function formUrl(v){const F=C.skjema||{};return(F.adresse||'')+v.map((x,i)=>x===''||x==null||!F.felt||!F.felt[i]?'':'&'+F.felt[i]+'='+encodeURIComponent(x)).join('')}
+function vUka(){const s=stats(SW),D=draft(),goal=S.goals.find(g=>g.week===wkey(add(SW,-7))),n=wk(SW).w,w=ui.ws;
+  const prev=[1,2,3,4].map(i=>stats(add(SW,-7*i))).filter(x=>x.n>0),pAvg=prev.length?prev.reduce((a,x)=>a+x.load,0)/prev.length:0,rel=!pAvg||!s.load?'':s.load>pAvg*1.2?'Mer enn vanlig for deg':s.load<pAvg*.8?'Mindre enn vanlig for deg':'Omtrent som vanlig for deg';
+  const sub=`${SW.getDate()}. ${MN[SW.getMonth()].slice(0,3)} – ${add(SW,6).getDate()}. ${MN[add(SW,6).getMonth()].slice(0,3)}`;
+  if(S.sent[SWK]&&!ui.preview)return head('Uke '+n,sub,'home')+`<div class="body"><div class="big"><div class="ok">${ic('check')}</div><div class="q">Sendt til treneren</div><div class="small">Målet ditt for neste uke:</div><div class="prev">${esc(S.sent[SWK].goal||'Ikke satt')}</div></div><div class="small" style="text-align:center">Kom du ikke helt frem til «Send inn» i skjemaet? Da kan du sende på nytt.</div><button class="ghost" data-act="reopen">Endre og send på nytt</button></div>`;
+  if(ui.preview){const g=composeGoal(D),url=formUrl(formVals(s,D));return head('Dette sendes',`Uke ${n} · til treneren`,'unpreview')+`<div class="body"><div class="card refl"><div><b>Fra:</b> ${esc(S.name)}</div><div><b>Uka:</b> ${s.n} økter, ${fmtMin(s.min)}. Søvn ${s.sleep!=null?nf(s.sleep,1)+' t':'–'}, energi ${s.energy!=null?nf(s.energy,1):'–'}, humør ${s.mood!=null?nf(s.mood,1):'–'}, hvilepuls ${s.hr!=null?Math.round(s.hr):'–'}.</div><div><b>Målet:</b> ${D.goalRes||'–'}</div><div><b>Kropp og energi:</b> ${esc(D.kropp||'–')}</div><div><b>Bra:</b> ${esc([...D.bra,D.braT].filter(Boolean).join(', ')||'–')}</div><div><b>Vanskelig:</b> ${esc([...D.vansk,D.vanskT].filter(Boolean).join(', ')||'–')}</div><div><b>Neste ukes mål:</b> ${esc(g||'–')}</div><div><b>Snakke med treneren:</b> ${D.talk}${D.talk==='Ja'&&D.talkT?' – '+esc(D.talkT):''}</div></div><div class="small">Daglige tall og notater blir på telefonen din.</div>${C.skjema&&C.skjema.adresse?`<a class="go" href="${esc(url)}" target="_blank" rel="noopener" data-act="sendform">Send til trener</a><div class="small" style="text-align:center">Skjemaet åpnes ferdig utfylt. Trykk «Send inn» der.</div>`:'<div class="info">Skjemaet er ikke satt opp ennå. Si fra til treneren.</div>'}</div>`}
+  const maxm=Math.max(60,...s.ks.map(k=>ses(k).reduce((a,x)=>a+x.min,0)));
+  const nights=s.ks.filter(k=>S.days[k]?.sleep>=8).length,withSleep=s.ks.filter(k=>S.days[k]?.sleep!=null).length,hb=f=>s.ks.filter(k=>S.days[k]?.habits?.[f]).length,hd=s.ks.filter(k=>S.days[k]?.habits).length,iss=s.ks.filter(k=>S.days[k]?.issue==='ja').length;
+  const hint={sovn:withSleep?`${nights} av ${withSleep} netter 8 t+`:'',mat:hd?`${hb('jevnt')} av ${hd} dager`:'',vann:hd?`${hb('vann')} av ${hd} dager`:'',plan:`${s.n} økter, ${s.rest} hviledager`,sagt:iss?`Meldt ${iss} ${iss===1?'dag':'dager'}`:'Ingenting meldt'};
+  const titles=['Uka di','Hvordan gikk det?','Ukesjekk','Bra og vanskelig','Neste uke'];
+  let b='';
+  if(w===1)b=`<div class="pair"><div class="card"><h3>Trening</h3><div class="stat"><span class="num">${fmtMin(s.min)}</span><span>${s.n} økter</span></div><div class="split"><i style="width:${s.min?s.org/s.min*100:0}%;background:var(--navy)"></i><i style="width:${s.min?s.egen/s.min*100:0}%;background:var(--blue)"></i></div><div class="leg"><span><i style="background:var(--navy)"></i>Lag</span><span><i style="background:var(--blue)"></i>Egen</span></div>${rel?`<div class="small" style="margin-top:6px">${rel}</div>`:''}</div><div class="card"><h3>Søvn og hvile</h3><div class="stat"><span class="num">${s.sleep!=null?nf(s.sleep,1)+' t':'–'}</span><span>i snitt</span></div><div class="small" style="margin-top:8px">${s.rest} hviledager<br>Hvilepuls ${s.hr!=null?Math.round(s.hr):'–'}</div></div></div>
+  <div class="card"><div class="days7">${s.ks.concat(Array(7-s.ks.length).fill(null)).map((k,i)=>{const m=k?ses(k).reduce((a,x)=>a+x.min,0):0,sl=k&&S.days[k]?.sleep;return`<div><em>${m?m:''}</em><b style="height:${m/maxm*70}%"></b><span>${DS[(i+1)%7]}</span><span>${sl?nf(sl,1)+'t':'–'}</span></div>`}).join('')}</div><div class="leg" style="margin-top:6px"><span><i style="background:var(--blue)"></i>min trening</span><span>under: timer søvn</span></div></div>
+  <div class="small">Laget automatisk fra ${s.reg} av ${s.ks.length} dager.</div>`;
+  if(w===2)b=`${goal?`<div class="card"><div class="small">Målet ditt</div><div class="prev">${esc(goal.text)}</div><div class="lbl">Klarte du det?</div><div class="seg">${['Ja','Delvis','Ikke ennå'].map(v=>`<button class="${D.goalRes===v?'on':''}" data-act="d" data-f="goalRes" data-v="${v}">${v}</button>`).join('')}</div></div>`:''}<div class="card"><div class="prev">Hvordan har kroppen og energien vært?</div><div class="seg" style="margin-top:10px">${['Bedre enn vanlig','Som vanlig','Tyngre enn vanlig'].map(v=>`<button class="${D.kropp===v?'on':''}" data-act="d" data-f="kropp" data-v="${v}">${v}</button>`).join('')}</div></div>`;
+  if(w===3)b=`<div class="card"><div class="small">Denne uka har jeg …</div>${CHECK.map(([c,t])=>`<div class="chk"><span>${t}</span><span class="seg">${['Ja','Delvis','Nei'].map(v=>`<button class="${D.check[c]===v?'on':''}" data-act="chk" data-f="${c}" data-v="${v}">${v}</button>`).join('')}</span>${hint[c]?`<span class="h">${hint[c]}</span>`:''}</div>`).join('')}</div>`;
+  if(w===4){const g=top(s.ss.flatMap(x=>x.good||[])),h=top(s.ss.flatMap(x=>x.hard||[]));b=`<div class="q">Hva gjorde du bra?</div>${g?`<div class="from">Etter øktene sa du: ${esc(g)}</div>`:''}<div class="chips">${BRA.map(t=>`<button class="chip ${D.bra.includes(t)?'on':''}" data-act="tog" data-f="bra" data-v="${t}">${t}</button>`).join('')}</div><textarea data-d="braT" maxlength="200" placeholder="Jeg var fornøyd med at … (valgfritt)">${esc(D.braT)}</textarea>
+  <div class="q">Hva var vanskelig?</div>${h?`<div class="from">Etter øktene sa du: ${esc(h)}</div>`:''}<div class="chips">${VANSK.map(t=>`<button class="chip ${D.vansk.includes(t)?'on':''}" data-act="tog" data-f="vansk" data-v="${t}">${t}</button>`).join('')}</div><textarea data-d="vanskT" maxlength="200" placeholder="Neste gang vil jeg prøve å … (valgfritt)">${esc(D.vanskT)}</textarea>`}
+  if(w===5)b=`<div class="q">Ett mål for neste uke</div>${C.tema?`<div class="tema">Trenernes tema: <b>${esc(C.tema)}</b></div>`:''}<div class="tabs">${Object.keys(AREAS).map(a=>`<button class="${D.area===a?'on':''}" data-act="area" data-v="${a}">${ALAB[a]}</button>`).join('')}</div><div class="sugg">${AREAS[D.area].map(t=>`<button class="${D.goal===t?'on':''}" data-act="goal" data-v="${esc(t)}">${t}</button>`).join('')}</div><input type="text" data-d="goal" maxlength="120" value="${esc(D.goal)}" placeholder="Eller skriv ditt eget mål"><div class="lbl">Når?</div><div class="chips">${['På trening','I kamp','I løkka','Hjemme'].map(v=>`<button class="chip ${D.naar===v?'on':''}" data-act="d" data-f="naar" data-v="${v}">${v}</button>`).join('')}</div><div class="lbl">Hvor ofte?</div><div class="chips">${['Hver dag','Noen dager','På hver trening'].map(v=>`<button class="chip ${D.ofte===v?'on':''}" data-act="d" data-f="ofte" data-v="${v}">${v}</button>`).join('')}</div><div class="card"><div class="small">Målet ditt</div><div class="prev" id="goalprev">${esc(composeGoal(D))||'–'}</div></div><div class="lbl">Vil du snakke med treneren om noe?</div><div class="yn"><button class="${D.talk==='Nei'?'on':''}" data-act="d" data-f="talk" data-v="Nei">Nei</button><button class="${D.talk==='Ja'?'on':''}" data-act="d" data-f="talk" data-v="Ja">Ja</button></div>${D.talk==='Ja'?`<textarea data-d="talkT" maxlength="300" placeholder="Hva vil du at treneren skal vite?">${esc(D.talkT)}</textarea>`:''}`;
+  return head(titles[w-1],`Uke ${n} · steg ${w} av 5`,w>1?'wprev':'home',w,5)+`<div class="body">${b}<button class="go" data-act="${w<5?'wnext':'preview'}">${w<5?'Neste':'Se hva som sendes'}</button>${w>1&&w<5?`<button class="ghost" data-act="wnext">Hopp over</button>`:''}</div>`}
+function vHist(){const rows=[5,4,3,2,1,0].map(i=>{const m=add(W0,-7*i);return{w:wk(m).w,s:stats(m)}}),mx=Math.max(...rows.map(r=>r.s.min),1),ks=[];for(let i=0;i<14;i++)ks.push(iso(add(TODAY,-i)));
+  return head('Historikk','Bare din egen utvikling')+`<div class="body"><div class="card"><h3>Trening og søvn per uke</h3><div class="hrow small"><span></span><span>Trening</span><span>Søvn</span></div>${rows.map(r=>`<div class="hrow"><span>Uke ${r.w}</span><span><span class="bar"><i style="width:${r.s.org/mx*100}%;background:var(--navy)"></i><i style="width:${r.s.egen/mx*100}%;background:var(--blue)"></i></span>${fmtMin(r.s.min)}</span><span><span class="bar"><i style="width:${r.s.sleep?Math.max(0,(r.s.sleep-6)/4*100):0}%;background:#7fb2ea"></i></span>${r.s.sleep!=null?nf(r.s.sleep,1)+' t':'–'}</span></div>`).join('')}<div class="leg"><span><i style="background:var(--navy)"></i>Lag</span><span><i style="background:var(--blue)"></i>Egen</span><span><i style="background:#7fb2ea"></i>Søvn</span></div></div>
+  <div class="card"><h3>Siste to uker</h3><div class="dl">${ks.map(k=>{const e=S.days[k],x=ses(k);return`<button data-act="openday" data-v="${k}"><b>${dlabel(k)}</b><b>${state(k)==='full'?'✓':state(k)==='part'?'Delvis':'Fyll inn'}</b><span>${e&&e.sleep!=null?`Søvn ${nf(e.sleep,1)} t · energi ${e.energy??'–'}${e.hr!=null?' · puls '+e.hr:''}`:'Ikke registrert'}</span><span>${x.length?x.map(y=>y.type).join(', '):'Hviledag'}</span></button>`}).join('')}</div></div>
+  ${S.goals.length?`<div class="card"><h3>Tidligere mål</h3>${S.goals.slice().reverse().map(g=>`<div class="chk"><span>${esc(g.text)}</span><span class="small">${g.res||'Pågår'}</span></div>`).join('')}</div>`:''}</div>`}
+function vProfil(){return head('Meg',esc(S.name),'home')+`<div class="body"><div class="card"><h3>Navn</h3><input type="text" id="namein" maxlength="40" value="${esc(S.name)}"><button class="go" data-act="setname">Lagre navn</button></div>
+  <div class="card"><h3>Sikkerhetskopi</h3><div class="small">Dagboken ligger bare på denne telefonen. Ta en sikkerhetskopi av og til, og før du bytter telefon. Filen kan lagres i Filer eller sendes til deg selv.</div><button class="btn2" style="margin-top:10px" data-act="export">Lagre sikkerhetskopi</button><button class="btn2" style="margin-top:8px" data-act="import">Hent fra sikkerhetskopi</button>${ui.imp?`<div class="info" style="margin-top:10px">Sikkerhetskopien har ${Object.keys(ui.imp.days).length} dager og ${ui.imp.sessions.length} økter. Den erstatter alt som ligger i appen nå.<div class="yn" style="margin-top:8px"><button data-act="impyes">Ja, erstatt</button><button data-act="impno">Avbryt</button></div></div>`:''}${ui.err?`<div class="err">${ui.err}</div>`:''}</div>
+  ${S.progs.length?`<div class="card"><h3>Faste økter</h3>${S.progs.map((g,i)=>`<div class="chk"><span>${esc(g.name)} · ${fmtMin(g.min)}</span><button class="chip" data-act="delprog" data-v="${i}">Fjern</button></div>`).join('')}</div>`:''}
+  <div class="card"><h3>Om dagboken</h3><div class="small">Dagboken er et verktøy for utvikling og dialog, ikke en test og ikke et medisinsk verktøy. Alt du registrerer, lagres bare på denne telefonen. Treneren får bare ukesoppsummeringen du selv sender. Har du vondt, er syk eller veldig sliten over tid, snakk med en forelder og treneren.</div></div></div>`}
+let lastKey='';
+function render(){const wy=window.scrollY,key=ui.view+ui.step+ui.ws+ui.preview+(ui.tr?ui.tr.step:'');renderInner();if(key===lastKey)window.scrollTo(0,wy);else window.scrollTo(0,0);lastKey=key}
+function renderInner(){const app=document.getElementById('app');
+  const v={start:vStart,home:vHome,status:vStatus,trening:vTrening,uka:vUka,hist:vHist,profil:vProfil}[ui.view]();const tab=ui.view==='status'||ui.view==='profil'?'home':ui.view;
+  app.innerHTML=v+(ui.view==='start'?'':`<nav class="nav">${[['home','Hjem','home'],['trening','Trening','plus'],['uka','Uka','cal'],['hist','Historikk','chart']].map(([k,l,i])=>`<button class="${tab===k?'on':''}" data-act="${k}">${ic(i)}${l}</button>`).join('')}</nav>`)+(ui.toast?`<div class="toast" role="status">${ui.toast}</div>`:'');}
+function toast(t){ui.toast=t;render();setTimeout(()=>{ui.toast='';render()},1800)}
+function startTr(type,min){ui.tr={date:ui.view==='status'?ui.sd:TK,step:type?2:1,type:type||null,min:min||null,rpe:null,feel:null,good:[],hard:[],need:[],refl:''};ui.view='trening';ui.err='';render()}
+function markSent(D){const s=stats(SW),g=composeGoal(D);S.sent[SWK]={at:new Date().toISOString(),goal:g};const last=S.goals.find(x=>x.week===wkey(add(SW,-7)));if(last)last.res=D.goalRes||null;S.goals=S.goals.filter(x=>x.week!==SWK);if(g)S.goals.push({week:SWK,text:g,res:null});ui.preview=false;save();render()}
+document.addEventListener('click',ev=>{const b=ev.target.closest('[data-act]');if(!b)return;
+  const a=b.dataset.act,v=b.dataset.v,k=ui.sd,e=S.days[k];
+  if(a==='setname'){const n=(document.getElementById('namein').value||'').trim();if(n.length<2){ui.err='Skriv navnet ditt først.';render();return}S.name=n;save();ui.err='';if(ui.view==='start')go('home');else toast('Navnet er lagret');return}
+  if(a==='home'||a==='hist'||a==='profil'){ui.preview=false;ui.imp=null;go(a);return}
+  if(a==='uka'){ui.preview=false;ui.ws=1;go('uka');return}
+  if(a==='hideinst'){S.hideInstall=true;save();render();return}
+  if(a==='trening'){startTr();return}
+  if(a==='plan'){const p=planFor(TK);startTr(p.type,p.min);return}
+  if(a==='openday'){ui.sd=v;ui.step=Number(b.dataset.step)||1;go('status');return}
+  if(a==='set'){dayO(k)[b.dataset.f]=Number(v);save();ui.err='';render();return}
+  if(a==='sleep'){e.sleep=Math.min(13,Math.max(4,e.sleep+Number(v)));save();render();return}
+  if(a==='hrstart'){const prev=Object.keys(S.days).filter(x=>x<k&&S.days[x].hr!=null).sort().pop();e.hr=prev?S.days[prev].hr:60;delete e.hrSkip;save();render();return}
+  if(a==='hr'){e.hr=Math.min(120,Math.max(35,e.hr+Number(v)));save();render();return}
+  if(a==='hrnone'){e.hr=null;e.hrSkip=true;save();render();return}
+  if(a==='issue'){e.issue=v;if(v==='nei'){delete e.itype;delete e.note}save();ui.err='';render();return}
+  if(a==='itype'){e.itype=v;save();render();return}
+  if(a==='hab'){e.habits[v]=!e.habits[v];save();render();return}
+  if(a==='next'){if(b.dataset.ok!=='1'){ui.err='Velg et svar først.';render();return}ui.err='';ui.step++;render();return}
+  if(a==='prev'){ui.step--;ui.err='';render();return}
+  if(a==='quicktr'){startTr(v==='Annet'?null:v,v==='Lagtrening'?(planFor(ui.sd)||{}).min||90:v==='Styrketrening'?30:null);return}
+  const t=ui.tr;
+  if(a==='trdate'){t.date=v;render();return}
+  if(a==='pick'){t.type=v;t.min=Number(b.dataset.min)||null;t.step=2;t.fromProg=false;render();return}
+  if(a==='prog'){const g=S.progs[v];Object.assign(t,{type:g.type,min:g.min,step:2,fromProg:true});render();return}
+  if(a==='trmin'){t.min=Number(v);render();return}
+  if(a==='trstep'){t.min=Math.min(480,Math.max(15,t.min+Number(v)));render();return}
+  if(a==='trrpe'){t.rpe=Number(v);ui.err='';render();return}
+  if(a==='trfeel'){t.feel=Number(v);render();return}
+  if(a==='trtog'){const L=t[b.dataset.f];if(b.dataset.f==='need'){if(v==='Nei'){t.need=L.includes('Nei')?[]:['Nei']}else{t.need=L.filter(x=>x!=='Nei');const i=t.need.indexOf(v);i<0?t.need.push(v):t.need.splice(i,1)}}else{const i=L.indexOf(v);i<0?L.push(v):L.splice(i,1)}render();return}
+  if(a==='trsave'){t.save=b.checked;return}
+  if(a==='trback'){t.step=1;ui.err='';render();return}
+  if(a==='trprev'){t.step=2;render();return}
+  if(a==='trnext'){if(!t.min||!t.rpe){ui.err='Velg hvor lenge og hvor hardt.';render();return}ui.err='';t.step=3;render();return}
+  if(a==='trsavego'){S.sessions.push({id:'u'+Date.now(),date:t.date,type:t.type,min:t.min,rpe:t.rpe,feel:t.feel,good:t.good,hard:t.hard,need:t.need,refl:t.refl});if(t.save)S.progs.push({type:t.type,name:'Min '+t.type.toLowerCase(),min:t.min});if(S.days[t.date]?.habits&&S.days[t.date].habits.etter==null)S.days[t.date].habits.etter=false;save();ui.view='home';toast('Økt lagret · '+t.type+' '+fmtMin(t.min));return}
+  if(a==='delprog'){S.progs.splice(Number(v),1);save();render();return}
+  if(a==='export'){try{const blob=new Blob([JSON.stringify(S)],{type:'application/json'});const u=URL.createObjectURL(blob);const l=document.createElement('a');l.href=u;l.download='spillerdagbok-'+TK+'.json';document.body.appendChild(l);l.click();l.remove();setTimeout(()=>URL.revokeObjectURL(u),2000);toast('Sikkerhetskopi lagret')}catch(err){ui.err='Kunne ikke lage sikkerhetskopi på denne telefonen.';render()}return}
+  if(a==='import'){document.getElementById('importfile').click();return}
+  if(a==='impyes'){S=ui.imp;ui.imp=null;save();toast('Dagboken er hentet tilbake');return}
+  if(a==='impno'){ui.imp=null;render();return}
+  const D=draft();
+  if(a==='wnext'){ui.ws++;render();return}
+  if(a==='wprev'){ui.ws--;render();return}
+  if(a==='d'){D[b.dataset.f]=v;save();render();return}
+  if(a==='chk'){D.check[b.dataset.f]=v;save();render();return}
+  if(a==='tog'){const L=D[b.dataset.f],i=L.indexOf(v);i<0?L.push(v):L.splice(i,1);save();render();return}
+  if(a==='area'){D.area=v;save();render();return}
+  if(a==='goal'){D.goal=v;save();render();return}
+  if(a==='preview'){ui.preview=true;render();return}
+  if(a==='unpreview'){ui.preview=false;render();return}
+  if(a==='reopen'){delete S.sent[SWK];ui.ws=1;save();render();return}
+  if(a==='sendform'){setTimeout(()=>markSent(draft()),400);return}
+});
+document.addEventListener('input',ev=>{const x=ev.target;if(x.dataset.field){dayO(ui.sd)[x.dataset.field]=x.value;save()}if(x.dataset.tr){ui.tr[x.dataset.tr]=x.value}if(x.dataset.d){const D=draft();D[x.dataset.d]=x.value;save();const p=document.getElementById('goalprev');if(p&&x.dataset.d==='goal')p.textContent=composeGoal(D)||'–'}});
+document.addEventListener('keydown',ev=>{if(ev.key==='Enter'&&ev.target.id==='namein'){ev.preventDefault();document.querySelector('[data-act=setname]').click()}});
+document.getElementById('importfile').addEventListener('change',ev=>{const f=ev.target.files&&ev.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(!d||!d.days||!Array.isArray(d.sessions))throw 0;ui.imp=d;ui.err=''}catch(e){ui.imp=null;ui.err='Filen ser ikke ut som en sikkerhetskopi fra dagboken.'}render()};r.readAsText(f);ev.target.value=''});
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'&&iso(new Date())!==TK)location.reload()});
+if('serviceWorker' in navigator&&location.protocol==='https:'){navigator.serviceWorker.register('sw.js').catch(()=>{})}
+render();
+}
+</script>
+</body>
+</html>
