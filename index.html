@@ -167,7 +167,7 @@ const cap=s=>s[0].toUpperCase()+s.slice(1);
 const nf=(x,d=0)=>x.toLocaleString('nb-NO',{minimumFractionDigits:d,maximumFractionDigits:d});
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const T0=new Date();const TODAY=new Date(T0.getFullYear(),T0.getMonth(),T0.getDate());const TK=iso(TODAY);
-const W0=mon(TODAY);const WEEKEND=TODAY.getDay()===0||TODAY.getDay()===6;const SW=WEEKEND?W0:add(W0,-7);const SWK=wkey(SW);
+const W0=mon(TODAY);const WEEKEND=TODAY.getDay()===0||TODAY.getDay()===6;let SW=W0,SWK=wkey(W0);
 function plansFor(k){const ms=(C.kamper||[]).filter(x=>x.dato===k).sort((a,b)=>(a.tid||'').localeCompare(b.tid||''));if(ms.length)return ms.map(m=>({type:'Kamp',time:m.tid||'',min:m.min||60,name:m.navn||'Kamp'}));const p=planFor(k);return p?[p]:[]}
 function planFor(k){const m=(C.kamper||[]).find(x=>x.dato===k);if(m)return{type:'Kamp',time:m.tid||'',min:m.min||60,name:m.navn||'Kamp'};const d=parse(k).getDay();const p=(C.treningsplan||[]).find(x=>k>=x.fra&&k<=x.til);const t=p&&p.dager&&p.dager[d];return t?{type:'Lagtrening',time:t.tid,min:t.min,name:'Lagtrening'}:null}
 const TYPES=[['Lagtrening','Med laget'],['Kamp','Serie eller cup'],['Løkkefotball','Med venner'],['Styrketrening','Program eller gym'],['Egentrening fotball','Alene med ball'],['Løping/kondisjon','Løp og intervaller'],['Skolegym','Kroppsøving'],['Annen idrett','Håndball, ski …'],['Annen aktivitet','Sykling, bading …']];
@@ -189,6 +189,8 @@ const KEY='g13dagbok';
 const blank=()=>({v:1,name:'',days:{},sessions:[],sent:{},draft:{},progs:[],goals:[],hideInstall:false});
 let S;try{S=JSON.parse(localStorage.getItem(KEY)||'null')}catch(e){S=null}
 if(!S||!S.days)S=blank();
+function pickWeek(){const pm=add(W0,-7),a=iso(pm),b=iso(W0);const has=S.sessions.some(x=>x.date>=a&&x.date<b)||Object.keys(S.days).some(k=>k>=a&&k<b&&S.days[k].sleep!=null);SW=(!WEEKEND&&has&&!S.sent[wkey(pm)])?pm:W0;SWK=wkey(SW)}
+pickWeek();
 let saveOk=true;
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S));saveOk=true}catch(e){saveOk=false}};
 try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist()}catch(e){}
@@ -214,14 +216,14 @@ function vUpcoming(){const rows=[];for(let i=1;i<=7;i++){const d=add(TODAY,i),k=
 function vHome(){const st=state(TK),ps=plansFor(TK),p=ps[0],todaySes=ses(TK),pDone=p&&todaySes.some(x=>x.type===p.type),s=stats(W0),goal=S.goals[S.goals.length-1],sent=!!S.sent[SWK];
   const stSub=st==='full'?'Ferdig':st==='part'?'Én ting igjen':'Ca. 1 minutt';
   const trRow=p?todo(pDone,ps.length>1?'Kamp i dag':`${p.name}${p.time?' kl. '+p.time:''}`,pDone?'Registrert':ps.length>1?ps.map(x=>x.name+' kl. '+x.time).join(' · '):'Registrer etter økta',`data-act="plan"`,false):todo(todaySes.length>0,'Trening eller løkke',todaySes.length?todaySes.map(x=>x.type).join(', '):'Hvis du har trent i dag',`data-act="trening"`,false);
-  const wSub=sent?'Sendt til treneren':WEEKEND?'Klar nå · 2–4 minutter':`Uke ${wk(SW).w} er ikke sendt ennå`;
+  const late=SWK!==wkey(W0),wSub=sent?'Sendt til treneren':late?`Uke ${wk(SW).w} er ikke sendt ennå`:WEEKEND?'Klar nå · 2–4 minutter':'Gjøres på søndag';
   const inst=!standalone()&&!S.hideInstall?`<div class="card"><h3>Legg appen på hjem-skjermen</h3><div class="small"><b>iPhone (Safari):</b> trykk Del-knappen og «Legg til på Hjem-skjerm».<br><b>Android (Chrome):</b> trykk ⋮ og «Legg til på startskjermen».<br>Da lagres dagboken trygt, og den er lett å finne.</div><button class="ghost" style="text-align:left;padding:8px 0 0" data-act="hideinst">Ok, skjønner</button></div>`:'';
   return head(`Hei, ${esc(S.name.split(' ')[0])}!`,`${cap(DN[TODAY.getDay()])} ${TODAY.getDate()}. ${MN[TODAY.getMonth()]} · uke ${wk(TODAY).w}`,false,0,4,true)+`<div class="body">${saveOk?'':'<div class="info"><b>Kunne ikke lagre.</b> Nettleseren tillater ikke lagring. Prøv å åpne appen i Safari eller Chrome, ikke i privat modus.</div>'}
   <div class="sec">Hver dag</div>
   <div class="card todo">${todo(st==='full','Dagens status',stSub,`data-act="openday" data-v="${TK}" data-step="${st==='part'&&S.days[TK].issue?4:1}"`,true)}${trRow}</div>
   ${p?`<button class="ghost" style="text-align:left;padding:0 4px" data-act="trening">+ Annen trening eller løkke</button>`:''}
   <div class="sec">Hver søndag</div>
-  <div class="card todo">${todo(sent,'Ukesoppsummering',wSub,`data-act="uka"`,WEEKEND||!sent)}</div>
+  <div class="card todo">${todo(sent,'Ukesoppsummering',wSub,`data-act="uka"`,WEEKEND||late)}</div>
   ${goal?`<div class="card"><div class="small">Målet ditt denne uka</div><div class="prev">${esc(goal.text)}</div></div>`:''}
   ${vUpcoming()}
   <div class="card">${weekStrip()}<div class="mini"><span>Trening <b>${fmtMin(s.min)}</b></span><span>Søvn <b>${s.sleep!=null?nf(s.sleep,1)+' t':'–'}</b></span></div></div>
@@ -329,7 +331,7 @@ document.addEventListener('click',ev=>{const b=ev.target.closest('[data-act]');i
   if(a==='delprog'){S.progs.splice(Number(v),1);save();render();return}
   if(a==='export'){try{const blob=new Blob([JSON.stringify(S)],{type:'application/json'});const u=URL.createObjectURL(blob);const l=document.createElement('a');l.href=u;l.download='spillerdagbok-'+TK+'.json';document.body.appendChild(l);l.click();l.remove();setTimeout(()=>URL.revokeObjectURL(u),2000);toast('Sikkerhetskopi lagret')}catch(err){ui.err='Kunne ikke lage sikkerhetskopi på denne telefonen.';render()}return}
   if(a==='import'){document.getElementById('importfile').click();return}
-  if(a==='impyes'){S=ui.imp;ui.imp=null;save();toast('Dagboken er hentet tilbake');return}
+  if(a==='impyes'){S=ui.imp;ui.imp=null;save();pickWeek();toast('Dagboken er hentet tilbake');return}
   if(a==='impno'){ui.imp=null;render();return}
   const D=draft();
   if(a==='wnext'){ui.ws++;render();return}
