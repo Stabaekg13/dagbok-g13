@@ -134,6 +134,10 @@ textarea{min-height:64px}
 .sec{font-size:14px;font-weight:600;color:var(--muted);margin:4px 2px -6px}
 .mini{display:flex;justify-content:space-between;gap:8px;font-size:14px;margin-top:10px;color:var(--muted)}
 .mini b{color:var(--ink);font-weight:600}
+.up{display:grid;grid-template-columns:auto auto minmax(0,1fr);gap:6px 12px;font-size:15px;align-items:baseline}
+.up .d{font-weight:600}
+.up .t{color:var(--muted);font-variant-numeric:tabular-nums}
+.up .k{font-weight:600;color:var(--blue)}
 .refl{display:grid;gap:8px;font-size:15px}
 .refl b{font-weight:600}
 .hide{display:none}
@@ -204,6 +208,9 @@ function todo(done,title,sub,attrs,hot){return`<button class="${hot&&!done?'hot'
 function weekStrip(){return`<div class="week">${[0,1,2,3,4,5,6].map(i=>{const d=add(W0,i),k=iso(d),fut=d>TODAY,st=fut?'none':state(k);return`<button class="wd ${st} ${k===TK?'today':''} ${fut?'fut':''}" ${fut?'disabled':`data-act="openday" data-v="${k}"`} aria-label="${DN[d.getDay()]}"><span>${DS[d.getDay()]}</span><span class="c">${st==='full'?ic('check').replace('class="ic"','class="ic" style="width:18px;height:18px;stroke-width:3"'):d.getDate()}</span><span class="t ${ses(k).length?'on':''}"></span></button>`}).join('')}</div>`}
 const standalone=()=>{try{return matchMedia('(display-mode: standalone)').matches||navigator.standalone===true}catch(e){return false}};
 function vStart(){return head('Spillerdagbok',C.lag||'')+`<div class="body"><div class="q">Hei! Hva heter du?</div><div class="small">Navnet sendes med ukesoppsummeringen, så treneren vet hvem den er fra. Skriv fornavn og første bokstav i etternavnet.</div><input type="text" id="namein" maxlength="40" placeholder="For eksempel Emil H." autocomplete="given-name" value="${esc(S.name)}">${ui.err?`<div class="err">${ui.err}</div>`:''}<button class="go" data-act="setname">Start</button><div class="card"><h3>Slik fungerer det</h3><div class="small"><b>Hver dag:</b> en kort status om søvn, form og vaner, og trening når du har trent.<br><b>Hver søndag:</b> en ukesoppsummering som sendes til treneren.<br>Alt du registrerer, lagres bare på denne telefonen. Treneren får bare ukesoppsummeringen du selv sender.</div></div></div>`}
+function vUpcoming(){const rows=[];for(let i=1;i<=7;i++){const d=add(TODAY,i),k=iso(d);plansFor(k).forEach((p,j)=>rows.push(`<span class="d">${j?'':(i===1?'I morgen':cap(DN[d.getDay()]).slice(0,3)+' '+d.getDate()+'.')}</span><span class="t">${p.time||''}</span><span class="${p.type==='Kamp'?'k':''}">${esc(p.name)}</span>`))}
+  let body=rows.length?`<div class="up">${rows.join('')}</div>`:'';if(!rows.length){let nx=null;for(let i=8;i<=90&&!nx;i++){const d=add(TODAY,i),ps=plansFor(iso(d));if(ps.length)nx={d,p:ps[0]}}body=`<div class="small">Ingen planlagte treninger de neste 7 dagene.${nx?` Neste: ${DN[nx.d.getDay()]} ${nx.d.getDate()}. ${MN[nx.d.getMonth()]} kl. ${nx.p.time}, ${esc(nx.p.name.toLowerCase())}.`:''}</div>`}
+  return`<div class="card"><h3>Neste 7 dager</h3>${body}</div>`}
 function vHome(){const st=state(TK),ps=plansFor(TK),p=ps[0],todaySes=ses(TK),pDone=p&&todaySes.some(x=>x.type===p.type),s=stats(W0),goal=S.goals[S.goals.length-1],sent=!!S.sent[SWK];
   const stSub=st==='full'?'Ferdig':st==='part'?'Én ting igjen':'Ca. 1 minutt';
   const trRow=p?todo(pDone,ps.length>1?'Kamp i dag':`${p.name}${p.time?' kl. '+p.time:''}`,pDone?'Registrert':ps.length>1?ps.map(x=>x.name+' kl. '+x.time).join(' · '):'Registrer etter økta',`data-act="plan"`,false):todo(todaySes.length>0,'Trening eller løkke',todaySes.length?todaySes.map(x=>x.type).join(', '):'Hvis du har trent i dag',`data-act="trening"`,false);
@@ -216,6 +223,7 @@ function vHome(){const st=state(TK),ps=plansFor(TK),p=ps[0],todaySes=ses(TK),pDo
   <div class="sec">Hver søndag</div>
   <div class="card todo">${todo(sent,'Ukesoppsummering',wSub,`data-act="uka"`,WEEKEND||!sent)}</div>
   ${goal?`<div class="card"><div class="small">Målet ditt denne uka</div><div class="prev">${esc(goal.text)}</div></div>`:''}
+  ${vUpcoming()}
   <div class="card">${weekStrip()}<div class="mini"><span>Trening <b>${fmtMin(s.min)}</b></span><span>Søvn <b>${s.sleep!=null?nf(s.sleep,1)+' t':'–'}</b></span></div></div>
   ${inst}</div>`}
 function scale(f,v,lo,hi){return`<div class="scale">${[1,2,3,4,5].map(i=>`<button class="sc ${v===i?'on':''}" data-act="set" data-f="${f}" data-v="${i}">${i}</button>`).join('')}</div><div class="ends"><span>${lo}</span><span>${hi}</span></div>`}
